@@ -121,25 +121,45 @@
     ========================================= */
 
     function getPlayerId() {
-
+    
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+    
+    
+        const queryId =
+            params.get("id");
+    
+    
+        if (queryId) {
+    
+            return queryId;
+    
+        }
+    
+    
         const path =
             window.location.pathname;
-
+    
+    
         const match =
             path.match(
                 /\/sports\/live\/([^\/]+)\/?$/
             );
-
+    
+    
         if (!match) {
-
+    
             return null;
-
+    
         }
-
+    
+    
         return decodeURIComponent(
             match[1]
         );
-
+    
     }
 
 
