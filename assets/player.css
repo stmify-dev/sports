@@ -1,0 +1,186 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    background: #000;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    overflow: hidden;
+}
+
+#app {
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+}
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================================
+   LOADING
+========================================= */
+
+#loading-screen {
+    position: fixed;
+
+    inset: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #000;
+
+    color: #fff;
+
+    z-index: 1000;
+}
+
+.loader {
+    width: 42px;
+    height: 42px;
+
+    border: 4px solid rgba(255,255,255,.2);
+
+    border-top-color: #fff;
+
+    border-radius: 50%;
+
+    animation: spin .8s linear infinite;
+}
+
+.loading-text {
+    margin-top: 16px;
+
+    font-size: 14px;
+
+    opacity: .7;
+}
+
+@keyframes spin {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* =========================================
+   PLAYER
+========================================= */
+
+#player-wrapper {
+    width: 100%;
+    height: 100vh;
+
+    background: #000;
+}
+
+#jw-player {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* =========================================
+   ERROR
+========================================= */
+
+#error-screen {
+    position: fixed;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #151515 0%,
+            #050505 45%,
+            #000 100%
+        );
+
+    color: #fff;
+
+    z-index: 2000;
+}
+
+.error-box {
+    text-align: center;
+
+    padding: 40px;
+
+    max-width: 520px;
+}
+
+.error-code {
+    font-size: 90px;
+
+    font-weight: 800;
+
+    line-height: 1;
+
+    letter-spacing: -5px;
+
+    opacity: .9;
+}
+
+.error-box h1 {
+    margin: 20px 0 10px;
+
+    font-size: 25px;
+}
+
+.error-box p {
+    margin: 0;
+
+    color: #999;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .error-box {
+        padding: 25px;
+    }
+
+    .error-code {
+        font-size: 70px;
+    }
+
+    .error-box h1 {
+        font-size: 21px;
+    }
+}
