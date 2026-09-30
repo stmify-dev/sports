@@ -240,7 +240,7 @@ body {
 
 .jwplayer .jw-error-msg {
 
-    position: absolute !important;
+    position: flex !important;
 
     top: 50% !important;
     left: 50% !important;
