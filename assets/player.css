@@ -160,7 +160,9 @@ body {
 }
 
 
-/* Control bar */
+/* =========================================
+   CONTROL BAR
+========================================= */
 
 .jwplayer .jw-controlbar {
 
@@ -169,7 +171,9 @@ body {
 }
 
 
-/* Center play button */
+/* =========================================
+   CENTER PLAY BUTTON
+========================================= */
 
 .jwplayer .jw-display-icon-container {
 
@@ -178,18 +182,100 @@ body {
     top: 50% !important;
     left: 50% !important;
 
-    transform: translate(-50%, -50%) !important;
+    right: auto !important;
+    bottom: auto !important;
+
+    transform:
+        translate(-50%, -50%) !important;
 
     margin: 0 !important;
 
 }
 
 
-/* Player controls */
+/* =========================================
+   PLAYER CONTROLS
+========================================= */
 
 .jwplayer .jw-controls {
 
     z-index: 10 !important;
+
+}
+
+
+/* =========================================
+   JW INFO OVERLAY
+========================================= */
+
+.jwplayer .jw-info-overlay {
+
+    position: absolute !important;
+
+    top: 50% !important;
+    left: 50% !important;
+
+    right: auto !important;
+    bottom: auto !important;
+
+    width: auto !important;
+
+    max-width: 90% !important;
+
+    margin: 0 !important;
+
+    transform:
+        translate(-50%, -50%) !important;
+
+    text-align: center !important;
+
+    z-index: 20 !important;
+
+}
+
+
+/* =========================================
+   JW ERROR MESSAGE
+========================================= */
+
+.jwplayer .jw-error-msg {
+
+    position: absolute !important;
+
+    top: 50% !important;
+    left: 50% !important;
+
+    right: auto !important;
+    bottom: auto !important;
+
+    width: auto !important;
+
+    max-width: 90% !important;
+
+    margin: 0 !important;
+
+    transform:
+        translate(-50%, -50%) !important;
+
+    text-align: center !important;
+
+    z-index: 20 !important;
+
+}
+
+
+/* =========================================
+   ERROR / INFO CONTENT
+========================================= */
+
+.jwplayer .jw-info-overlay,
+.jwplayer .jw-error-msg {
+
+    display: flex !important;
+
+    align-items: center !important;
+
+    justify-content: center !important;
 
 }
 
@@ -283,36 +369,53 @@ body {
 @media (max-width: 600px) {
 
     #app {
+
         width: 100%;
+
         height: 100dvh;
 
         min-height: 100dvh;
+
     }
 
     #player-wrapper {
+
         width: 100%;
+
         height: 100dvh;
+
     }
 
     #jw-player {
+
         width: 100% !important;
+
         height: 100% !important;
+
     }
 
     .error-box {
+
         padding: 25px 20px;
+
     }
 
     .error-code {
+
         font-size: 70px;
+
     }
 
     .error-box h1 {
+
         font-size: 21px;
+
     }
 
     .error-box p {
+
         font-size: 14px;
+
     }
 
 }
@@ -325,11 +428,15 @@ body {
 @media (max-width: 380px) {
 
     .error-code {
+
         font-size: 60px;
+
     }
 
     .error-box h1 {
+
         font-size: 19px;
+
     }
 
 }
