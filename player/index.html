@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Player</title>
+
+    <link
+        rel="stylesheet"
+        href="../assets/player.css"
+    >
+</head>
+
+<body>
+
+<div id="app">
+
+    <div id="loading-screen">
+        <div class="loader"></div>
+        <div class="loading-text">
+            Loading player...
+        </div>
+    </div>
+
+    <div id="error-screen" class="hidden">
+
+        <div class="error-box">
+
+            <div class="error-code">
+                404
+            </div>
+
+            <h1>
+                Stream Not Available
+            </h1>
+
+            <p id="error-message">
+                This player URL is unavailable.
+            </p>
+
+        </div>
+
+    </div>
+
+    <div id="player-wrapper" class="hidden">
+
+        <div id="jw-player"></div>
+
+    </div>
+
+</div>
+
+
+<script src="//content.jwplatform.com/libraries/SAHhwvZq.js"></script>
+
+<script src="../assets/player.js"></script>
+
+</body>
+</html>
