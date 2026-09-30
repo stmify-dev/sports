@@ -36,29 +36,6 @@
         );
 
 
-    if (match) {
-
-        const id =
-            encodeURIComponent(
-                match[1]
-            );
-
-
-        /*
-         * Send to actual player page
-         *
-         * /sports/live/?id=abc123
-         */
-
-       window.location.replace(
-            "/sports/live/" + id + "/"
-        );
-
-        return;
-
-    }
-
-
     /*
      * Normal 404
      */
