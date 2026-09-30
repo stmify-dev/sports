@@ -9,9 +9,11 @@
 
     const CONFIG = {
 
-        DATA_URL: "../data/streams.json",
+        DATA_URL:
+            "/sports/data/streams.json",
 
-        TIMEOUT: 10000,
+        TIMEOUT:
+            10000,
 
         PLAYER_OPTIONS: {
 
@@ -43,106 +45,187 @@
     ========================================= */
 
     const loadingScreen =
-        document.getElementById("loading-screen");
+        document.getElementById(
+            "loading-screen"
+        );
 
     const errorScreen =
-        document.getElementById("error-screen");
+        document.getElementById(
+            "error-screen"
+        );
 
     const playerWrapper =
-        document.getElementById("player-wrapper");
+        document.getElementById(
+            "player-wrapper"
+        );
 
     const errorMessage =
-        document.getElementById("error-message");
+        document.getElementById(
+            "error-message"
+        );
 
 
     /* =========================================
-       HELPERS
+       ERROR
     ========================================= */
 
     function showError(message) {
 
-        loadingScreen.classList.add("hidden");
+        loadingScreen.classList.add(
+            "hidden"
+        );
 
-        playerWrapper.classList.add("hidden");
+        playerWrapper.classList.add(
+            "hidden"
+        );
 
         errorMessage.textContent =
-            message || "This player URL is unavailable.";
+            message ||
+            "This player URL is unavailable.";
 
-        errorScreen.classList.remove("hidden");
+        errorScreen.classList.remove(
+            "hidden"
+        );
 
-        document.title = "404 - Stream Not Available";
+        document.title =
+            "404 - Stream Not Available";
+
     }
 
+
+    /* =========================================
+       PLAYER DISPLAY
+    ========================================= */
 
     function showPlayer() {
 
-        loadingScreen.classList.add("hidden");
+        loadingScreen.classList.add(
+            "hidden"
+        );
 
-        errorScreen.classList.add("hidden");
+        errorScreen.classList.add(
+            "hidden"
+        );
 
-        playerWrapper.classList.remove("hidden");
+        playerWrapper.classList.remove(
+            "hidden"
+        );
+
     }
 
+
+    /* =========================================
+       GET ID FROM:
+
+       /sports/live/abc123/
+    ========================================= */
 
     function getPlayerId() {
 
         const path =
             window.location.pathname;
 
-        const cleanPath =
-            path.replace(/\/+$/, "");
+        const match =
+            path.match(
+                /\/sports\/live\/([^\/]+)\/?$/
+            );
 
-        const parts =
-            cleanPath.split("/");
+        if (!match) {
 
-        const playerIndex =
-            parts.lastIndexOf("player");
-
-        if (
-            playerIndex === -1 ||
-            !parts[playerIndex + 1]
-        ) {
             return null;
+
         }
 
         return decodeURIComponent(
-            parts[playerIndex + 1]
+            match[1]
         );
+
     }
 
+
+    /* =========================================
+       DATE PARSER
+    ========================================= */
 
     function parseDate(value) {
 
-        const date = new Date(value);
+        if (
+            typeof value !== "string" ||
+            !value
+        ) {
 
-        if (Number.isNaN(date.getTime())) {
             return null;
+
+        }
+
+        const date =
+            new Date(value);
+
+        if (
+            Number.isNaN(
+                date.getTime()
+            )
+        ) {
+
+            return null;
+
         }
 
         return date;
+
     }
 
 
-    function isCurrentlyAvailable(stream) {
+    /* =========================================
+       TIME CHECK
+    ========================================= */
 
-        const now = Date.now();
+    function isCurrentlyAvailable(
+        stream
+    ) {
+
+        const now =
+            Date.now();
 
         const start =
-            parseDate(stream.start);
+            parseDate(
+                stream.start
+            );
 
         const end =
-            parseDate(stream.end);
+            parseDate(
+                stream.end
+            );
+
 
         if (!start || !end) {
+
             return false;
+
         }
+
+
+        if (
+            end.getTime() <=
+            start.getTime()
+        ) {
+
+            return false;
+
+        }
+
 
         return (
             now >= start.getTime() &&
             now < end.getTime()
         );
+
     }
 
+
+    /* =========================================
+       LOAD JSON
+    ========================================= */
 
     async function loadJSON() {
 
@@ -151,86 +234,133 @@
 
         const timeout =
             setTimeout(
-                () => controller.abort(),
+                function () {
+
+                    controller.abort();
+
+                },
                 CONFIG.TIMEOUT
             );
+
 
         try {
 
             const response =
                 await fetch(
-                    CONFIG.DATA_URL,
+                    CONFIG.DATA_URL +
+                    "?t=" +
+                    Date.now(),
                     {
                         cache: "no-store",
-                        signal: controller.signal
+                        signal:
+                            controller.signal
                     }
                 );
 
+
             if (!response.ok) {
+
                 throw new Error(
                     "Unable to load stream data."
                 );
+
             }
+
 
             return await response.json();
 
-        } finally {
-
-            clearTimeout(timeout);
-        }
-    }
-
-
-    function findStream(data, id) {
-
-        if (
-            !data ||
-            !Array.isArray(data.streams)
-        ) {
-            return null;
         }
 
-        return data.streams.find(
-            stream =>
-                String(stream.id) === String(id)
-        );
+        finally {
+
+            clearTimeout(
+                timeout
+            );
+
+        }
+
     }
 
 
     /* =========================================
-       JW PLAYER
+       FIND STREAM
     ========================================= */
 
-    function startJWPlayer(stream) {
+    function findStream(
+        data,
+        id
+    ) {
 
         if (
-            typeof jwplayer === "undefined"
+            !data ||
+            !Array.isArray(
+                data.streams
+            )
+        ) {
+
+            return null;
+
+        }
+
+
+        return data.streams.find(
+            function (stream) {
+
+                return String(
+                    stream.id
+                ) === String(id);
+
+            }
+        ) || null;
+
+    }
+
+
+    /* =========================================
+       START JW PLAYER
+    ========================================= */
+
+    function startJWPlayer(
+        stream
+    ) {
+
+        if (
+            typeof jwplayer ===
+            "undefined"
         ) {
 
             showError(
-                "Player library could not be loaded."
+                "JW Player could not be loaded."
             );
 
             return;
+
         }
 
 
         const player =
-            jwplayer("jw-player");
+            jwplayer(
+                "jw-player"
+            );
 
 
         const options = {
 
             ...CONFIG.PLAYER_OPTIONS,
 
-            file: stream.url,
+            file:
+                stream.url,
 
-            title: stream.title || "Live Player"
+            title:
+                stream.title ||
+                "Live Player"
 
         };
 
 
-        player.setup(options);
+        player.setup(
+            options
+        );
 
 
         player.on(
@@ -242,6 +372,7 @@
                 document.title =
                     stream.title ||
                     "Live Player";
+
             }
         );
 
@@ -253,6 +384,7 @@
                 showError(
                     "The player could not be started."
                 );
+
             }
         );
 
@@ -261,14 +393,10 @@
             "error",
             function () {
 
-                /*
-                 * Do not automatically expose
-                 * the original stream URL.
-                 */
-
                 console.warn(
-                    "Player playback error."
+                    "Playback error."
                 );
+
             }
         );
 
@@ -288,10 +416,11 @@
         if (!id) {
 
             showError(
-                "Invalid player URL."
+                "Invalid live player URL."
             );
 
             return;
+
         }
 
 
@@ -302,7 +431,10 @@
 
 
             const stream =
-                findStream(data, id);
+                findStream(
+                    data,
+                    id
+                );
 
 
             if (!stream) {
@@ -312,15 +444,18 @@
                 );
 
                 return;
+
             }
 
 
-            /*
-             * Time restriction
-             */
+            /* ================================
+               TIME CONTROL
+            ================================= */
 
             if (
-                !isCurrentlyAvailable(stream)
+                !isCurrentlyAvailable(
+                    stream
+                )
             ) {
 
                 showError(
@@ -328,36 +463,48 @@
                 );
 
                 return;
+
             }
 
 
-            /*
-             * Validate URL
-             */
+            /* ================================
+               URL VALIDATION
+            ================================= */
 
             if (
-                typeof stream.url !== "string" ||
-                !/^https?:\/\//i.test(stream.url)
+                typeof stream.url !==
+                    "string" ||
+                !/^https?:\/\//i.test(
+                    stream.url
+                )
             ) {
 
                 showError(
-                    "Invalid stream configuration."
+                    "Invalid stream URL."
                 );
 
                 return;
+
             }
 
 
-            startJWPlayer(stream);
+            startJWPlayer(
+                stream
+            );
 
 
-        } catch (error) {
+        }
 
-            console.error(error);
+        catch (error) {
+
+            console.error(
+                error
+            );
 
             showError(
                 "Unable to load this player."
             );
+
         }
 
     }
