@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -11,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Player</title>
+    <title>404</title>
 
 </head>
 
@@ -24,25 +23,71 @@
     const path =
         window.location.pathname;
 
+
+    /*
+     * Match:
+     *
+     * /sports/live/abc123/
+     */
+
     const match =
         path.match(
-            /\/player\/([^\/]+)\/?$/
+            /^\/sports\/live\/([^\/]+)\/?$/
         );
+
 
     if (match) {
 
         const id =
-            encodeURIComponent(match[1]);
+            encodeURIComponent(
+                match[1]
+            );
+
+
+        /*
+         * Send to actual player page
+         *
+         * /sports/live/?id=abc123
+         */
 
         window.location.replace(
-            "/sports/player/?id=" + id
+            "/sports/live/?id=" + id
         );
 
         return;
+
     }
 
-    document.body.innerHTML =
-        "<h1>404</h1>";
+
+    /*
+     * Normal 404
+     */
+
+    document.body.innerHTML = `
+        <div style="
+            min-height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            background:#000;
+            color:#fff;
+            font-family:Arial,sans-serif;
+            text-align:center;
+        ">
+            <div>
+                <div style="
+                    font-size:80px;
+                    font-weight:800;
+                ">
+                    404
+                </div>
+
+                <p>
+                    Page not found
+                </p>
+            </div>
+        </div>
+    `;
 
 })();
 
