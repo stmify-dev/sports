@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Player</title>
+
+</head>
+
+<body>
+
+<script>
+
+(function () {
+
+    const path =
+        window.location.pathname;
+
+    const match =
+        path.match(
+            /\/player\/([^\/]+)\/?$/
+        );
+
+    if (match) {
+
+        const id =
+            encodeURIComponent(match[1]);
+
+        window.location.replace(
+            "/REPOSITORY/player/?id=" + id
+        );
+
+        return;
+    }
+
+    document.body.innerHTML =
+        "<h1>404</h1>";
+
+})();
+
+</script>
+
+</body>
+
+</html>
