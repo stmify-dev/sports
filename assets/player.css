@@ -152,10 +152,6 @@ body {
    JW PLAYER
 ========================================= */
 
-/*
-   Do not hide JW Player controls.
-*/
-
 .jwplayer {
 
     width: 100% !important;
@@ -164,9 +160,7 @@ body {
 }
 
 
-/*
-   Keep the JW control bar visible.
-*/
+/* Control bar */
 
 .jwplayer .jw-controlbar {
 
@@ -175,20 +169,23 @@ body {
 }
 
 
-/*
-   Keep the center play button visible.
-*/
+/* Center play button */
 
-.jwplayer .jw-display {
+.jwplayer .jw-display-icon-container {
 
-    display: block !important;
+    position: absolute !important;
+
+    top: 50% !important;
+    left: 50% !important;
+
+    transform: translate(-50%, -50%) !important;
+
+    margin: 0 !important;
 
 }
 
 
-/*
-   Keep the player controls above the video.
-*/
+/* Player controls */
 
 .jwplayer .jw-controls {
 
